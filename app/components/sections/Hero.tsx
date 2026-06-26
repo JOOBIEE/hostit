@@ -2,10 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import { useTheme } from '@/app/components/ui/ThemeProvider'
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [visible, setVisible] = useState(false)
+  const { theme } = useTheme()
 
   // Word by word animation
   const line1 = ['Your', 'event.']
@@ -93,7 +95,7 @@ export default function Hero() {
         // Draw particle
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(255,255,255,0.6)'
+        ctx.fillStyle = theme === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.4)'
         ctx.fill()
       })
 
@@ -109,7 +111,9 @@ export default function Hero() {
             ctx.beginPath()
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = `rgba(255,255,255,${opacity})`
+            ctx.strokeStyle = theme === 'dark'
+  ? `rgba(255,255,255,${opacity})`
+  : `rgba(0,0,0,${opacity})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
@@ -126,7 +130,7 @@ export default function Hero() {
       window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', handleMouseMove)
     }
-  }, [])
+  }, [theme])
 
   return (
     <section className="hero">
@@ -185,7 +189,7 @@ export default function Hero() {
       </div>
 
       <div className="hero__scroll-arrow">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: 'var(--color-text-muted)' }}>
           <path d="M12 5v14M5 12l7 7 7-7" />
         </svg>
       </div>

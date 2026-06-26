@@ -342,7 +342,7 @@ button {
 .hero {
   position: relative;
   min-height: 100vh;
-  background: var(--color-charcoal);
+  background: var(--color-bg-alt);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -379,7 +379,7 @@ button {
 .hero__headline {
   font-family: var(--font-serif);
   font-size: var(--text-5xl);
-  color: var(--color-white);
+  color: var(--color-text);
   font-weight: 300;
   line-height: 1.1;
   margin-bottom: var(--space-6);
@@ -466,12 +466,12 @@ button {
 
 .btn--outline {
   background: transparent;
-  color: var(--color-white);
+  color: var(--color-text);
   border: 1px solid rgba(255,255,255,0.4);
 }
 
 .btn--outline:hover {
-  border-color: var(--color-white);
+  border-color: var(--color-text);
   transform: translateY(-2px);
 }
 
