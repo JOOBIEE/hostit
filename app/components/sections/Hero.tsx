@@ -95,7 +95,7 @@ export default function Hero() {
         // Draw particle
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = theme === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.4)'
+        ctx.fillStyle = theme === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.75)'
         ctx.fill()
       })
 
@@ -111,9 +111,9 @@ export default function Hero() {
             ctx.beginPath()
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = theme === 'dark'
+           ctx.strokeStyle = theme === 'dark'
   ? `rgba(255,255,255,${opacity})`
-  : `rgba(0,0,0,${opacity})`
+  : `rgba(0,0,0,${opacity * 2.5})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }

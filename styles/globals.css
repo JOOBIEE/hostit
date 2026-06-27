@@ -501,3 +501,219 @@ button {
     align-items: center;
   }
 }
+
+/* ── PROOF STRIP ── */
+.proof {
+  background: var(--color-bg);
+  padding: var(--space-16) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.proof__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8);
+}
+
+.proof__item {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.proof__item--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.proof__headline {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  color: var(--color-text);
+  font-weight: 400;
+  margin-bottom: var(--space-2);
+}
+
+.proof__sub {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+  .proof__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+}
+/* ── SERVICES ── */
+.services {
+  background: var(--color-bg-alt);
+  padding: var(--space-24) var(--space-6);
+}
+
+.services__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+}
+
+.service-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: var(--space-8);
+  position: relative;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--transition-base), transform var(--transition-base), box-shadow var(--transition-fast);
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-border);
+  transition: background var(--transition-fast);
+}
+
+.service-card:hover::before {
+  background: var(--color-gold);
+}
+
+.service-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+}
+
+.service-card--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service-card__icon {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+  transition: color var(--transition-fast);
+}
+
+.service-card:hover .service-card__icon {
+  color: var(--color-gold);
+}
+
+.service-card__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  color: var(--color-text);
+  font-weight: 400;
+  margin-bottom: var(--space-3);
+}
+
+.service-card__desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .services__grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* ── GALLERY ── */
+.gallery {
+  background: var(--color-bg);
+  padding: var(--space-24) var(--space-6);
+}
+
+.gallery__grid {
+  columns: 3;
+  column-gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: var(--space-4);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.gallery-item--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-item__img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  filter: grayscale(100%);
+  transform: scale(1);
+  transition: filter var(--transition-slow), transform var(--transition-slow);
+}
+
+.gallery-item__img--hovered {
+  filter: grayscale(0%);
+  transform: scale(1.02);
+}
+
+.gallery-item__fallback {
+  position: absolute;
+  inset: 0;
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: -1;
+}
+
+.gallery-item__fallback span {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.gallery__cta {
+  text-align: center;
+  margin-top: var(--space-12);
+  opacity: 0;
+  transition: opacity var(--transition-base) 400ms;
+}
+
+.gallery__cta--visible {
+  opacity: 1;
+}
+
+/* ── BUTTON DARK ── */
+.btn--dark {
+  background: var(--color-text);
+  color: var(--color-bg);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn--dark:hover {
+  background: var(--color-gold);
+  color: var(--color-white);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .gallery__grid {
+    columns: 2;
+  }
+
+  .gallery-item__img {
+    filter: grayscale(0%);
+  }
+}
