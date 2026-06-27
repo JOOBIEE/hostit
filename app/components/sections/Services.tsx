@@ -1,24 +1,9 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-
-const services = [
-  {
-    icon: 'hosts',
-    title: 'Hosts & Hostesses',
-    description: 'Professional, well-presented event staff for any occasion.',
-  },
-  {
-    icon: 'bridal',
-    title: 'Bridal & Celebrant Assistants',
-    description: 'Dedicated support so you are fully present on your day.',
-  },
-  {
-    icon: 'coordination',
-    title: 'Full Event Coordination',
-    description: 'We plan, manage, and execute — start to finish.',
-  },
-]
+import { client } from '@/app/lib/sanity'
+import { servicesQuery } from '@/app/lib/queries'
+import { Service } from '@/app/types'
 
 function ServiceIcon({ type }: { type: string }) {
   if (type === 'hosts') {
@@ -50,7 +35,14 @@ function ServiceIcon({ type }: { type: string }) {
 
 export default function Services() {
   const [visible, setVisible] = useState(false)
+  const [services, setServices] = useState<Service[]>([])
   const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    client.fetch(servicesQuery).then((data) => {
+      setServices(data)
+    })
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -66,14 +58,20 @@ export default function Services() {
     return () => observer.disconnect()
   }, [])
 
+  const displayServices = services.length > 0 ? services : [
+    { _id: '1', _type: 'service', title: 'Hosts & Hostesses', description: 'Professional, well-presented event staff for any occasion.', icon: 'hosts' as const },
+    { _id: '2', _type: 'service', title: 'Bridal & Celebrant Assistants', description: 'Dedicated support so you are fully present on your day.', icon: 'bridal' as const },
+    { _id: '3', _type: 'service', title: 'Full Event Coordination', description: 'We plan, manage, and execute — start to finish.', icon: 'coordination' as const },
+  ]
+
   return (
     <section className="services" id="services" ref={ref}>
       <div className="container">
         <p className="section-label">What We Do</p>
         <div className="services__grid">
-          {services.map((service, i) => (
+          {displayServices.map((service, i) => (
             <div
-              key={i}
+              key={service._id}
               className={`service-card ${visible ? 'service-card--visible' : ''}`}
               style={{ transitionDelay: `${i * 120}ms` }}
             >

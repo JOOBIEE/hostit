@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import ThemeToggle from '@/app/components/ui/ThemeToggle'
+import Image from 'next/image'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -27,7 +28,13 @@ export default function Navbar() {
       <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
         <div className="navbar__inner">
           <Link href="/" className="navbar__logo">
-            HostIt Services
+            <Image
+  src="/images/logo/logo.png"
+  alt="HostIt Services"
+  width={300}
+  height={100}
+  style={{ objectFit: 'contain' }}
+/>
           </Link>
 
           <div className="navbar__links">
@@ -62,7 +69,13 @@ export default function Navbar() {
       {/* Mobile Overlay */}
       <div className={`mobile-menu ${menuOpen ? 'mobile-menu--open' : ''}`}>
         <div className="mobile-menu__header">
-          <span className="mobile-menu__logo">HostIt Services</span>
+          <span className="mobile-menu__logo"><Image
+  src="/images/logo/logo.png"
+  alt="HostIt Services"
+  width={200}
+  height={80}
+  style={{ objectFit: 'contain', filter: 'brightness(0) invert(1)' }}
+/></span>
           <button
             className="mobile-menu__close"
             onClick={() => setMenuOpen(false)}

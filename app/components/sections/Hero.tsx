@@ -4,22 +4,97 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useTheme } from '@/app/components/ui/ThemeProvider'
 
+function FloatingText() {
+  const letters = ['H', 'O', 'S', 'T', 'I', 'T']
+  const [activeIndex, setActiveIndex] = useState(-1)
+  const [visible, setVisible] = useState(false)
+
+  const positions = [
+    { x: '5%', y: '15%', rotate: '-12deg', size: '18vw' },
+    { x: '75%', y: '8%', rotate: '8deg', size: '14vw' },
+    { x: '55%', y: '60%', rotate: '-5deg', size: '20vw' },
+    { x: '15%', y: '65%', rotate: '10deg', size: '16vw' },
+    { x: '40%', y: '25%', rotate: '-8deg', size: '12vw' },
+    { x: '80%', y: '55%', rotate: '15deg', size: '17vw' },
+  ]
+
+  useEffect(() => {
+    let letterIndex = 0
+    let timeout: NodeJS.Timeout
+
+    const showNext = () => {
+      setActiveIndex(letterIndex)
+      letterIndex++
+
+      if (letterIndex < letters.length) {
+        timeout = setTimeout(showNext, 400)
+      } else {
+        timeout = setTimeout(() => {
+          setVisible(false)
+          setTimeout(() => {
+            letterIndex = 0
+            setActiveIndex(-1)
+            setVisible(true)
+            timeout = setTimeout(showNext, 200)
+          }, 2000)
+        }, 1500)
+      }
+    }
+
+    const startCycle = () => {
+      setVisible(true)
+      timeout = setTimeout(showNext, 800)
+    }
+
+    const initial = setTimeout(startCycle, 1500)
+
+    return () => {
+      clearTimeout(timeout)
+      clearTimeout(initial)
+    }
+  }, [])
+
+  return (
+    <div
+      className="hero__floating-text"
+      style={{
+        transition: 'opacity 1000ms ease',
+        opacity: visible ? 0.12 : 0,
+      }}
+    >
+      {letters.map((letter, i) => (
+        <span
+          key={i}
+          className="hero__float-letter"
+          style={{
+            left: positions[i].x,
+            top: positions[i].y,
+            transform: `rotate(${positions[i].rotate})`,
+            fontSize: positions[i].size,
+            opacity: activeIndex >= i ? 1 : 0,
+            transition: 'opacity 400ms ease',
+          }}
+        >
+          {letter}
+        </span>
+      ))}
+    </div>
+  )
+}
+
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [visible, setVisible] = useState(false)
   const { theme } = useTheme()
 
-  // Word by word animation
   const line1 = ['Your', 'event.']
   const line2 = ['Our', 'responsibility.']
-  const allWords = [...line1, ...line2]
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 100)
     return () => clearTimeout(timer)
   }, [])
 
-  // Particle system
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -63,7 +138,6 @@ export default function Hero() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       particles.forEach((p) => {
-        // Repulsion from mouse
         const dx = p.x - mouseX
         const dy = p.y - mouseY
         const dist = Math.sqrt(dx * dx + dy * dy)
@@ -74,11 +148,9 @@ export default function Hero() {
           p.vy += (dy / dist) * force * 0.5
         }
 
-        // Dampen velocity
         p.vx *= 0.99
         p.vy *= 0.99
 
-        // Clamp speed
         const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy)
         if (speed > 1.5) {
           p.vx = (p.vx / speed) * 1.5
@@ -88,18 +160,17 @@ export default function Hero() {
         p.x += p.vx
         p.y += p.vy
 
-        // Bounce off edges
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1
 
-        // Draw particle
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = theme === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.75)'
+        ctx.fillStyle = theme === 'dark'
+          ? 'rgba(255,255,255,0.6)'
+          : 'rgba(0,0,0,0.75)'
         ctx.fill()
       })
 
-      // Draw connections
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x
@@ -111,9 +182,9 @@ export default function Hero() {
             ctx.beginPath()
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(particles[j].x, particles[j].y)
-           ctx.strokeStyle = theme === 'dark'
-  ? `rgba(255,255,255,${opacity})`
-  : `rgba(0,0,0,${opacity * 2.5})`
+            ctx.strokeStyle = theme === 'dark'
+              ? `rgba(255,255,255,${opacity})`
+              : `rgba(0,0,0,${opacity * 2.5})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
@@ -135,6 +206,7 @@ export default function Hero() {
   return (
     <section className="hero">
       <canvas ref={canvasRef} className="hero__canvas" />
+      <FloatingText />
 
       <div className="hero__content">
         <div className={`hero__gold-line ${visible ? 'hero__gold-line--visible' : ''}`} />
@@ -189,7 +261,15 @@ export default function Hero() {
       </div>
 
       <div className="hero__scroll-arrow">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: 'var(--color-text-muted)' }}>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          style={{ color: 'var(--color-text-muted)' }}
+        >
           <path d="M12 5v14M5 12l7 7 7-7" />
         </svg>
       </div>
