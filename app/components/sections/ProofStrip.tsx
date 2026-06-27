@@ -36,7 +36,7 @@ export default function ProofStrip() {
   }, [])
 
   return (
-    <section className="proof" ref={ref}>
+    <section className="proof grain" ref={ref}>
       <div className="proof__inner">
         {proofPoints.map((point, i) => (
           <div

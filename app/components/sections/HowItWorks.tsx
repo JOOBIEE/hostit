@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import WordReveal from '@/app/components/ui/WordReveal'
 
 const steps = [
   {
@@ -41,7 +42,7 @@ export default function HowItWorks() {
   }, [])
 
   return (
-    <section className="hiw" ref={ref}>
+    <section className="hiw grain" ref={ref}>
       <div className="container">
         <p className="section-label" style={{ color: 'var(--color-text)', opacity: 0.5 }}>
           How It Works
@@ -60,7 +61,12 @@ export default function HowItWorks() {
                   style={{ transitionDelay: `${i * 200}ms` }}
                 />
               </div>
-              <h3 className="hiw__title">{step.title}</h3>
+              <h3 className="hiw__title">
+  <WordReveal
+    text={step.title}
+    triggered={visible}
+  />
+</h3>
               <p className="hiw__desc">{step.description}</p>
             </div>
           ))}

@@ -170,7 +170,7 @@ export default function Gallery() {
       }))
 
   return (
-    <section className="gallery" id="gallery" ref={ref}>
+    <section className="gallery grain" id="gallery" ref={ref}>
       <div className="container">
         <p className="section-label">The Team In Action</p>
         <div className="gallery__grid">

@@ -83,7 +83,7 @@ export default function Testimonials() {
   const t = testimonials[current]
 
   return (
-    <section className="testimonials" ref={ref}>
+    <section className="testimonials grain" ref={ref}>
       <div className="container">
         <p className="section-label">What Clients Say</p>
         <div className={`testimonials__card ${visible ? 'testimonials__card--visible' : ''} ${fading ? 'testimonials__card--fading' : ''}`}>

@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     description: 'Professional hosts, hostesses, bridal assistants and full event coordination in Lagos. Your event, our responsibility.',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: '/images/og-image.png',
         width: 1200,
         height: 630,
         alt: 'HostIt Services',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'HostIt Services — Premium Event Staffing in Lagos',
     description: 'Professional hosts, hostesses, bridal assistants and full event coordination in Lagos.',
-    images: ['/images/og-image.jpg'],
+    images: ['/images/og-image.png'],
   },
   robots: {
     index: true,
