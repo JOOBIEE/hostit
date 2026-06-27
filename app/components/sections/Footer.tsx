@@ -21,12 +21,12 @@ export default function Footer() {
         <div className="footer__col footer__col--right">
           <p className="footer__contact-label">Get In Touch</p>
           
-          <a  href="https://wa.me/2348000000000"
+          <a  href="https://wa.me/2347082972270"
             target="_blank"
             rel="noopener noreferrer"
             className="footer__contact-link"
           >
-            <span>+234 800 000 0000</span>
+            <span>+234 708 297 2270</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
