@@ -128,13 +128,11 @@ export default function CTA() {
 </p>
 
         
-         <a href="https://wa.me/2347082972270"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`cta__btn ${visible ? 'cta__btn--visible' : ''}`}
-        >
-          Book Your Event on WhatsApp
-        </a>
+        <a href="/book"
+  className={`cta__btn ${visible ? 'cta__btn--visible' : ''}`}
+>
+  Book Your Event
+</a>
 
         <p className={`cta__alt ${visible ? 'cta__alt--visible' : ''}`}>
           Or send us a DM on Instagram —{' '}
