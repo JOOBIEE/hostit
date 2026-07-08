@@ -251,9 +251,9 @@ export default function Hero() {
         </p>
 
         <div className={`hero__buttons ${visible ? 'hero__buttons--visible' : ''}`}>
-          <Link href="#contact" className="btn btn--gold">
-            Book Your Event
-          </Link>
+          <Link href="/book" className="btn btn--gold">
+  Book Your Event
+</Link>
           <Link href="#gallery" className="btn btn--outline">
             See Our Work
           </Link>

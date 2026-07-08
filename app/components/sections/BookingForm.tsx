@@ -110,10 +110,13 @@ export default function BookingForm() {
       }
 
       setSubmitted(true)
+window.scrollTo({ top: 0, behavior: 'smooth' })
 
-      const message = buildWhatsAppMessage()
-      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`
-      window.open(waUrl, '_blank')
+const message = buildWhatsAppMessage()
+const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`
+setTimeout(() => {
+  window.open(waUrl, '_blank')
+}, 500)
     } catch {
       setError('Something went wrong. Please try again.')
       setSubmitting(false)

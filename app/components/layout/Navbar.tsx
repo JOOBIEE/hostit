@@ -121,9 +121,9 @@ export default function Navbar() {
 
           <div className="navbar__right">
             <ThemeToggle />
-            <Link href="#contact" className="navbar__cta">
-              Book Your Event
-            </Link>
+            <Link href="/book" className="navbar__cta">
+  Book Your Event
+</Link>
           </div>
 
           <div className="navbar__mobile-right">
@@ -173,13 +173,9 @@ export default function Navbar() {
           ))}
         </div>
 
-        <Link
-          href="#contact"
-          className="mobile-menu__cta"
-          onClick={() => setMenuOpen(false)}
-        >
-          Book Your Event
-        </Link>
+        <Link href="/book" className="navbar__cta">
+  Book Your Event
+</Link>
       </div>
     </>
   )
