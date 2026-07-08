@@ -37,12 +37,12 @@ export default function Footer() {
               </svg>
             </a>
             
-            <a  href="https://instagram.com/hostitservices"
+            <a  href="https://instagram.com/hostit_services"
               target="_blank"
               rel="noopener noreferrer"
               className="footer__contact-link"
             >
-              <span>@hostitservices</span>
+              <span>@hostit_services</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
