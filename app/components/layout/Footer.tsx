@@ -13,12 +13,12 @@ export default function Footer() {
 
         {/* Center Column */}
         <div className="footer__col footer__col--center">
-          <nav className="footer__links">
-            <Link href="#">Home</Link>
-            <Link href="#services">Services</Link>
-            <Link href="#gallery">Gallery</Link>
-            <Link href="#contact">Contact</Link>
-          </nav>
+       <nav className="footer__links">
+  <Link href="/">Home</Link>
+  <Link href="/#services">Services</Link>
+  <Link href="/#gallery">Gallery</Link>
+  <Link href="/#contact">Contact</Link>
+</nav>
         </div>
 
         {/* Right Column */}

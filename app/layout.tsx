@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import '@/styles/globals.css'
 import ThemeProvider from '@/app/components/ui/ThemeProvider'
+import HashScrollHandler from '@/app/components/ui/HashScrollHandler'
 
 export const metadata: Metadata = {
   title: {
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_NG',
-    url: 'https://hostitservices.com',
+    url: 'https://hostit.services',
     siteName: 'HostIt Services',
     title: 'HostIt Services — Premium Event Staffing in Lagos',
     description: 'Professional hosts, hostesses, bridal assistants and full event coordination in Lagos. Your event, our responsibility.',
@@ -55,6 +56,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider>
+          <HashScrollHandler />
           {children}
         </ThemeProvider>
       </body>

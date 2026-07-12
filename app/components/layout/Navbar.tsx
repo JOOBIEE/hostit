@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import ThemeToggle from '@/app/components/ui/ThemeToggle'
+import { usePathname } from 'next/navigation'
 
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
@@ -73,6 +74,7 @@ function ScrambleLink({
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -88,11 +90,13 @@ export default function Navbar() {
     }
   }, [menuOpen])
 
+  const isHome = pathname === '/'
+
   const navLinks = [
-    { href: '#services', label: 'SERVICES' },
-    { href: '#events', label: 'EVENTS' },
-    { href: '#gallery', label: 'GALLERY' },
-    { href: '#contact', label: 'CONTACT' },
+    { href: isHome ? '#services' : '/#services', label: 'SERVICES' },
+    { href: isHome ? '#events' : '/#events', label: 'EVENTS' },
+    { href: isHome ? '#gallery' : '/#gallery', label: 'GALLERY' },
+    { href: isHome ? '#contact' : '/#contact', label: 'CONTACT' },
   ]
 
   return (
@@ -122,8 +126,8 @@ export default function Navbar() {
           <div className="navbar__right">
             <ThemeToggle />
             <Link href="/book" className="navbar__cta">
-  Book Your Event
-</Link>
+              Book Your Event
+            </Link>
           </div>
 
           <div className="navbar__mobile-right">
@@ -173,9 +177,13 @@ export default function Navbar() {
           ))}
         </div>
 
-        <Link href="/book" className="navbar__cta">
-  Book Your Event
-</Link>
+        <Link
+          href="/book"
+          className="mobile-menu__cta"
+          onClick={() => setMenuOpen(false)}
+        >
+          Book Your Event
+        </Link>
       </div>
     </>
   )

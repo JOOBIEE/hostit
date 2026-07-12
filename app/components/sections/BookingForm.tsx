@@ -74,55 +74,63 @@ export default function BookingForm() {
     return encodeURIComponent(lines)
   }
 
-  const handleSubmit = async () => {
-    setError('')
+const handleSubmit = async () => {
+  setError('')
 
-    if (
-      !form.fullName ||
-      !form.phone ||
-      !form.eventDate ||
-      !form.eventType ||
-      !form.eventVenue ||
-      !form.hostsRequired ||
-      !form.callUpTime ||
-      !form.closingTime ||
-      !form.outfitPreference
-    ) {
-      setError('Please fill in all required fields.')
+  if (
+    !form.fullName ||
+    !form.phone ||
+    !form.eventDate ||
+    !form.eventType ||
+    !form.eventVenue ||
+    !form.hostsRequired ||
+    !form.callUpTime ||
+    !form.closingTime ||
+    !form.outfitPreference
+  ) {
+    setError('Please fill in all required fields.')
+    return
+  }
+
+  if (form.eventType === 'Other' && !form.eventTypeOther) {
+    setError('Please specify your event type.')
+    return
+  }
+
+  setSubmitting(true)
+
+  try {
+    const res = await fetch('/api/booking', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      setError(data.error || 'Something went wrong. Please try again.')
+      setSubmitting(false)
       return
     }
 
-    setSubmitting(true)
+    const bookingId = data.bookingId
+    setSubmitted(true)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
 
-    try {
-      const res = await fetch('/api/booking', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
+    const eventLabel = form.eventType === 'Other' ? form.eventTypeOther : form.eventType
+    const message = encodeURIComponent(
+      `Hi, I just submitted a booking enquiry through your website.\n\nBooking ID: ${bookingId}\nName: ${form.fullName}\nEvent: ${eventLabel}\nDate: ${form.eventDate}\n\nLooking forward to your confirmation.`
+    )
 
-      const data = await res.json()
-
-      if (!res.ok) {
-        setError(data.error || 'Something went wrong. Please try again.')
-        setSubmitting(false)
-        return
-      }
-
-      setSubmitted(true)
-window.scrollTo({ top: 0, behavior: 'smooth' })
-
-const message = buildWhatsAppMessage()
-const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`
-setTimeout(() => {
-  window.open(waUrl, '_blank')
-}, 500)
-    } catch {
-      setError('Something went wrong. Please try again.')
-      setSubmitting(false)
-    }
+    setTimeout(() => {
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank')
+    }, 500)
+  } catch {
+    setError('Something went wrong. Please try again.')
+    setSubmitting(false)
   }
-
+}
   if (submitted) {
     return (
       <section className="booking-success">
