@@ -280,20 +280,15 @@ const handleSubmit = async () => {
 
           <div className="booking__field">
             <label className="booking__label">Number of Hosts/Hostesses Required <span>*</span></label>
-            <select
-              className="booking__input booking__select"
-              name="hostsRequired"
-              value={form.hostsRequired}
-              onChange={handle}
-            >
-              <option value="">Select number</option>
-              <option value="2">2</option>
-              <option value="4">4</option>
-              <option value="6">6</option>
-              <option value="8">8</option>
-              <option value="10+">10+</option>
-              <option value="Not sure">Not sure (I'd like a recommendation)</option>
-            </select>
+            <input
+  className="booking__input"
+  type="number"
+  name="hostsRequired"
+  value={form.hostsRequired}
+  onChange={handle}
+  placeholder="Enter number of hosts required"
+  min="1"
+/>
           </div>
 
           <div className="booking__row">
