@@ -162,18 +162,21 @@ export default function Gallery() {
   // Flatten all images from all events into one array
   const aspectRatios = ['tall', 'wide', 'square', 'tall', 'wide', 'square', 'tall', 'wide']
 
-  const photos: PhotoItem[] = sanityPhotos.length > 0
+const photos: PhotoItem[] = sanityPhotos.length > 0
   ? sanityPhotos.flatMap((event, eventIndex) =>
-      (event.images || []).map((img: GalleryImage, imgIndex: number) => ({ id: `${event._id}-${imgIndex}`,
+      (event.images || [])
+        .filter((img: GalleryImage) => img && img.asset && img.asset._ref)
+        .map((img: GalleryImage, imgIndex: number) => ({
+          id: `${event._id}-${imgIndex}`,
           alt: img.alt || event.eventName,
           aspectRatio: aspectRatios[(eventIndex * 4 + imgIndex) % aspectRatios.length],
           sanityUrl: urlFor(img).width(800).url(),
         }))
-      )
-    : placeholderPhotos.map((photo) => ({
-        ...photo,
-        sanityUrl: undefined,
-      }))
+    )
+  : placeholderPhotos.map((photo) => ({
+      ...photo,
+      sanityUrl: undefined,
+    }))
 
   return (
     <section className="gallery" id="gallery" ref={ref}>
