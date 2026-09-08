@@ -163,9 +163,8 @@ export default function Gallery() {
   const aspectRatios = ['tall', 'wide', 'square', 'tall', 'wide', 'square', 'tall', 'wide']
 
   const photos: PhotoItem[] = sanityPhotos.length > 0
-    ? sanityPhotos.flatMap((event, eventIndex) =>
-        event.images.map((img: GalleryImage, imgIndex: number) => ({
-          id: `${event._id}-${imgIndex}`,
+  ? sanityPhotos.flatMap((event, eventIndex) =>
+      (event.images || []).map((img: GalleryImage, imgIndex: number) => ({ id: `${event._id}-${imgIndex}`,
           alt: img.alt || event.eventName,
           aspectRatio: aspectRatios[(eventIndex * 4 + imgIndex) % aspectRatios.length],
           sanityUrl: urlFor(img).width(800).url(),
