@@ -7,14 +7,20 @@ export interface SanityImage {
   alt?: string
 }
 
+export interface GalleryImage {
+  asset: {
+    _ref: string
+    _type: 'reference'
+  }
+  alt?: string
+}
+
 export interface GalleryPhoto {
   _id: string
   _type: 'galleryPhoto'
-  title: string
-  alt: string
-  image: SanityImage
-  eventName?: string
+  eventName: string
   eventDate?: string
+  images: GalleryImage[]
   order?: number
 }
 

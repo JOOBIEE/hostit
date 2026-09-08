@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { client, urlFor } from '@/app/lib/sanity'
 import { galleryQuery } from '@/app/lib/queries'
-import { GalleryPhoto } from '@/app/types'
+import { GalleryPhoto, GalleryImage } from '@/app/types'
 
 const placeholderPhotos = [
   { id: '1', alt: 'Event photo 1', aspectRatio: 'tall' },
@@ -78,6 +78,8 @@ function GalleryItem({
     square: '300px',
   }
 
+  const aspectRatios = ['tall', 'wide', 'square']
+
   return (
     <div
       ref={ref}
@@ -122,7 +124,7 @@ export default function Gallery() {
   const [sanityPhotos, setSanityPhotos] = useState<GalleryPhoto[]>([])
 
   useEffect(() => {
-    client.fetch(galleryQuery).then((data) => {
+    client.fetch(galleryQuery).then((data: GalleryPhoto[]) => {
       if (data && data.length > 0) setSanityPhotos(data)
     })
   }, [])
@@ -157,20 +159,25 @@ export default function Gallery() {
     }
   }, [lightboxSrc])
 
+  // Flatten all images from all events into one array
+  const aspectRatios = ['tall', 'wide', 'square', 'tall', 'wide', 'square', 'tall', 'wide']
+
   const photos: PhotoItem[] = sanityPhotos.length > 0
-    ? sanityPhotos.map((photo) => ({
-        id: photo._id,
-        alt: photo.alt,
-        aspectRatio: 'tall',
-        sanityUrl: urlFor(photo.image).width(800).url(),
-      }))
+    ? sanityPhotos.flatMap((event, eventIndex) =>
+        event.images.map((img: GalleryImage, imgIndex: number) => ({
+          id: `${event._id}-${imgIndex}`,
+          alt: img.alt || event.eventName,
+          aspectRatio: aspectRatios[(eventIndex * 4 + imgIndex) % aspectRatios.length],
+          sanityUrl: urlFor(img).width(800).url(),
+        }))
+      )
     : placeholderPhotos.map((photo) => ({
         ...photo,
         sanityUrl: undefined,
       }))
 
   return (
-    <section className="gallery grain" id="gallery" ref={ref}>
+    <section className="gallery" id="gallery" ref={ref}>
       <div className="container">
         <p className="section-label">The Team In Action</p>
         <div className="gallery__grid">

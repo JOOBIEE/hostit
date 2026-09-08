@@ -1,11 +1,12 @@
 export const galleryQuery = `
   *[_type == "galleryPhoto"] | order(order asc) {
     _id,
-    title,
-    alt,
-    image,
     eventName,
     eventDate,
+    images[] {
+      asset,
+      alt
+    },
     order
   }
 `
